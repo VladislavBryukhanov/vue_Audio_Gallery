@@ -6,9 +6,15 @@ import router from './router';
 import store from './store';
 
 Vue.config.productionTip = false
-Vue.use(VueResource);
 Vue.use(VueRouter);
-Vue.http.options.root = 'https://127.0.0.1:1337';
+
+Vue.use(VueResource);
+Vue.http.options.root = 'http://localhost:1232';
+
+Vue.http.interceptors.push((request, next) => {
+  request.headers.set('authorization', localStorage.getItem('authorization'));
+  next();
+});
 
 new Vue({
   router,

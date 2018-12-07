@@ -40,15 +40,14 @@
         },
         methods: {
             signUp() {
-                // const {login, password, username} = this;
-                // this.$http.post('/getReq', {login, password, username})
-                //     .then(res => {
-                //         console.log(res);
-                //     })
-                this.$router.push('/main');
+                const {login, password, username} = this;
+                this.$store.dispatch('signUp', {login, password, username})
+                    .then(_ => this.$router.push('/main'));
             },
             signIn() {
-                this.$router.push('/main');
+                const {login, password} = this;
+                this.$store.dispatch('signIn', {login, password})
+                    .then(_ => this.$router.push('/main'));
             }
         }
     }
