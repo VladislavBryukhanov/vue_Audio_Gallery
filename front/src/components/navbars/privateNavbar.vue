@@ -2,10 +2,14 @@
     <div>
         <div class="navBar">
             <div  class="navigation">
-                <router-link :to="{name: 'home'}">Home</router-link>
+                <router-link :to="{
+                        name: 'audioList',
+                        params: { id: user._id}}">
+                    Personal audio list
+                </router-link>
             </div>
             <div class="profile">
-                <router-link class="username" to="profile">{{user.username}}</router-link>
+                <router-link class="username" :to="{name: 'profile'}">{{user.username}}</router-link>
                 <!--<img-->
                         <!--src={{this.authService.myUser.avatar|imagePath}}-->
                         <!--class="userAvatar"-->

@@ -15,4 +15,5 @@ export default {
   @import "../public/scss/navbar";
   @import "../public/scss/body";
   @import "../public/scss/editor";
+  @import "../public/scss/audio";
 </style>

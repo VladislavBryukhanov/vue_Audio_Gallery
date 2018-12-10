@@ -3,9 +3,10 @@ import sign from "../components/sign";
 import publicNavbar from "../components/navbars/publicNavbar";
 import privateNavbar from "../components/navbars/privateNavbar";
 import profile from "../components/profile";
-import home from "../components/home";
 import store from '../store';
-import editProfile from '../components/edit-profile';
+import editProfile from '../components/editProfile';
+import audioList from '../components/audioList';
+import audioTrackConstructor from "../components/audioTrackConstructor";
 
 const routes = [
     {
@@ -39,7 +40,7 @@ const routes = [
         children: [
             {
                 path: '',
-                redirect: 'home'
+                redirect: `profile`
             },
             {
                 path: 'profile',
@@ -52,9 +53,14 @@ const routes = [
                 component: editProfile
             },
             {
-                path: 'home',
-                name: 'home',
-                component: home
+                path: 'audioList/:id',
+                name: 'audioList',
+                component: audioList
+            },
+            {
+                path: 'audioTrackConstructor/:id?',
+                name: 'audioTrackConstructor',
+                component: audioTrackConstructor
             }
         ]
     }
@@ -68,13 +74,12 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
     if(!store.state.profile && localStorage.getItem('authorization')) {
         await store.dispatch('getProfile');
-        console.log(store.state);
     }
 
     if (to.matched.some(record => record.meta.unauthorized)) {
         if(store.state.profile) {
             next({
-                path: '/main'
+                path: `/main`
             });
         } else {
             next();

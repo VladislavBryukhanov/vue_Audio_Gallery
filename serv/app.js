@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
-const usersRouter = require('./routes/users');
 const app = express();
+const usersRouter = require('./routes/users');
+const audioRouter = require('./routes/audio');
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/shop', {useNewUrlParser: true});
 
@@ -26,5 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(jwtMW);
 app.use(confirmAuthTokenAccess);
 app.use('/auth', usersRouter);
+app.use('/audio', audioRouter);
 
 module.exports = app;

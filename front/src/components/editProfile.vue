@@ -2,11 +2,11 @@
     <div>
         <form>
             <label>Username</label>
-            <input v-model="user.username"/>
+            <input v-model.trim="user.username"/>
             <label>Login</label>
-            <input v-model="user.login"/>
+            <input v-model.trim="user.login"/>
             <label>Password</label>
-            <input v-model="user.password"/>
+            <input v-model.trim="user.password"/>
             <label>Bio</label>
             <textarea v-model="user.bio"></textarea>
             <button @click.prevent="editProfile">Save changes</button>
@@ -17,13 +17,13 @@
 
 <script>
     export default {
-        name: 'edit-profile',
+        name: 'editProfile',
         data() {
             return {
                 user: {
-                    username: this.$store.state.profile.username || '',
-                    login: this.$store.state.profile.login || '',
-                    bio: this.$store.state.profile.bio || '',
+                    username: this.$store.state.profile.username,
+                    login: this.$store.state.profile.login,
+                    bio: this.$store.state.profile.bio,
                     password: ''
                 }
             }
