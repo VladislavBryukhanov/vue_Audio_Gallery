@@ -3,6 +3,7 @@
         <h2>Profile</h2>
         <p>{{profile.username}}</p>
         <p>{{profile.login}}</p>
+        <p>{{profile.bio}}</p>
         <router-link to="editProfile">Edit profile</router-link>
     </div>
 </template>

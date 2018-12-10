@@ -24,7 +24,8 @@ const userSchema = mongoose.Schema({
         required: true
     },
     bio: {
-        type: String
+        type: String,
+        default: ''
     },
     role: {
         type: String,

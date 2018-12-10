@@ -34,7 +34,7 @@ const actions = {
         context.commit('setProfile', res.data);
     },
     async editProfile(context, user) {
-        const res = Vue.http.put('auth/editProfile', user);
+        const res = await Vue.http.put('auth/editProfile', user);
         context.commit('setProfile', res.data);
     }
 };

@@ -13,6 +13,20 @@ const getToken = (user) => {
   return jwt.sign(payload, require('../secretKey'), {expiresIn: 365 * 24 * 60 * 60});
 };
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/public/avatars')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+});
+const upload = multer({
+  storage: storage,
+  limits: {fileSize: 5 * 1024 * 1024}
+});
+
 router.get('/getProfile', async (request, response) => {
   const user = await User.findOne({
     _id: request.user._id,
@@ -35,7 +49,8 @@ router.post('/signUp', async (request, response) => {
   response.send(getToken(user));
 });
 
-router.put('/editProfile', async (request, response) => {
+router.put('/editProfile', upload.single('avatar'), async (request, response) => {
+  console.log(request.body);
   response.send(await User.findOneAndUpdate(
       {_id: request.user._id},
       request.body,
