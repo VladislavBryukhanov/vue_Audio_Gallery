@@ -5,7 +5,8 @@ const audioSchema = mongoose.Schema({
         required: true
     },
     titleImage: {
-        type: String
+        type: String,
+        default: '/audio_tracks/titleImage/default.jpg'
     },
     author: {
         type: String,

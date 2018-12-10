@@ -57,12 +57,12 @@
                 const newTrack =  new FormData;
                 newTrack.append('name', this.track.name);
                 newTrack.append('author', this.track.author);
-                newTrack.append('author', this.track.author);
                 newTrack.append('audio', this.track.audioTrack);
                 if (this.track.imageTitle) {
                     newTrack.append('titleImage', this.track.imageTitle);
                 }
                 this.$store.dispatch('addAudioTrack', newTrack);
+                this.$router.go(-1);
             }
         }
     }

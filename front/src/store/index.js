@@ -17,12 +17,12 @@ const mutations = {
     logOut(state) {
         localStorage.removeItem('authorization');
         // TODO interseptor for removing
+        // TODO reset state
         state.profile = null;
+        state.audioTracks = [];
     },
 
     getAudioTracks(state, tracks) {
-        console.log(tracks);
-        console.log(...tracks);
         state.audioTracks = [...state.audioTracks, ...tracks];
     },
     addAudioTrack(state, track) {

@@ -33,13 +33,13 @@ router.post('/addTrack', upload.fields([
     {name: 'audio', maxCount: 1},
     {name: 'titleImage', maxCount: 1}]),
     async(request, response) => {
-        // console.log(request.files);
         const newTrack = {...request.body};
         newTrack.postedBy = request.user._id;
-        newTrack.titleImage = `/audio_tracks/titleImage/${request.files.titleImage[0].filename}`;
+        if(request.files.titleImage) {
+            newTrack.titleImage = `/audio_tracks/titleImage/${request.files.titleImage[0].filename}`;
+        }
         newTrack.audioPath = `/audio_tracks/audio/${request.files.audio[0].filename}`;
         response.send(await Audio.create(newTrack));
-        // response.send(200);
 });
 
 router.put('/editTrack', async(request, response) => {
