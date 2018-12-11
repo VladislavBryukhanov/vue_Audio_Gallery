@@ -1,9 +1,7 @@
-import Vue from 'vue';
-
-const filters = (baseUrl) => {
-    Vue.filter('imagePath', (value) => {
-        return `${baseUrl}/${value}`;
-    });
+export default {
+    install(Vue, options) {
+        Vue.filter('imagePath', (value) => {
+            return `${options.baseUrl}/${value}`;
+        });
+    }
 };
-
-export default filters;
