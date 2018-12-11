@@ -4,7 +4,7 @@ Vue.use(Vuex);
 
 const state = {
     profile: null,
-    audioTracks: []
+    audioTracks: null
 };
 
 const mutations = {
@@ -19,7 +19,7 @@ const mutations = {
         // TODO interseptor for removing
         // TODO reset state
         state.profile = null;
-        state.audioTracks = [];
+        state.audioTracks = null;
     },
 
     getAudioTracks(state, tracks) {
@@ -49,8 +49,9 @@ const actions = {
         context.commit('getProfile', res.data);
     },
 //______Tracks______
-    async getAudioTracks(context, id) {
-        const res = await Vue.http.get(`audio/getTracks/${id}`);
+    async getAudioTracks(context, payload) {
+        const {id, offset, limit} = payload;
+        const res = await Vue.http.get(`audio/getTracks/${id}&${offset}&${limit}`);
         context.commit('getAudioTracks', res.data);
     },
     async addAudioTrack(context, track) {

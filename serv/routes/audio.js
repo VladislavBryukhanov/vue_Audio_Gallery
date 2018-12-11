@@ -23,10 +23,23 @@ router.get('/getTrackById/:id', async (request, response) => {
     response.send(await Audio.findOne({postedBy: mongoose.Types.ObjectId(request.params.id)}));
 });
 
-router.get('/getTracks/:id', async (request, response) => {
-    console.log(request.params.id);
+router.get('/getTracks/:id&:offset&:limit', async (request, response) => {
+    const {limit, offset, id} = request.params;
     console.log(request.params);
-    response.send(await Audio.find({postedBy: mongoose.Types.ObjectId(request.params.id)}));
+    console.log(limit);
+    console.log(offset);
+    console.log(id);
+    const postedBy = mongoose.Types.ObjectId(id);
+    const tracks =await Audio.find({postedBy})
+        .skip(offset)
+        .limit(limit);
+    const res = {
+        data: tracks,
+        count: await Audio.count({postedBy}),
+        limit,
+        offset
+    };
+    response.send(res)
 });
 
 router.post('/addTrack', upload.fields([
