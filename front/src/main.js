@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import router from './router';
 import store from './store';
 import FilterPlugin from './filters';
+import DirectivesPlugin from './directives';
 
 const baseUrl = 'http://localhost:1232';
 Vue.config.productionTip = false
@@ -13,6 +14,7 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.http.options.root = baseUrl;
 Vue.use(FilterPlugin, {baseUrl});
+Vue.use(DirectivesPlugin);
 
 Vue.http.interceptors.push((request, next) => {
   request.headers.set('authorization', localStorage.getItem('authorization'));

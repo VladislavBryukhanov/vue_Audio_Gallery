@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <!--<div v-for-->
+    <div v-infinite-scroll="nextPage">
         <h3>Audio List</h3>
         <router-link :to="{name: 'audioTrackConstructor'}">Add new track</router-link>
         <div v-if="audioTracks">
@@ -14,9 +13,7 @@
                 <div class="audioFile">
                     <img :src="track.audioPath | imagePath"/>
                 </div>
-                <!--<hr>-->
             </div>
-            <button @click="nextPage" v-show="audioTracks.data.length < audioTracks.count">Next page</button>
         </div>
     </div>
 </template>
@@ -27,18 +24,27 @@
         data() {
             return {
                 page: 0,
-                limit: 3
-            }
-        },
-        mounted() {
-            if (!this.audioTracks || this.audioTracks.data.length === 0) {
-                this.nextPage();
+                limit: 3,
+                // scroll: {
+                //     scrollPosition: 0,
+                //     scrollHeight: 0,
+                //     screenHeight: 0,
+                // },
+                // bottom: false
             }
         },
         computed: {
             audioTracks() {
                 return this.$store.state.audioTracks;
             }
+        },
+        mounted() {
+            if (!this.audioTracks || this.audioTracks.data.length === 0) {
+                this.nextPage();
+            }
+            // window.onscroll = () => {
+            //     this.bottom = this.isBottom();
+            // }
         },
         methods: {
             nextPage() {
@@ -51,7 +57,21 @@
                     }
                 );
                 this.page++;
-            }
-        }
+            },
+            // isBottom() {
+            //     this.scroll.scrollPosition = window.scrollY;
+            //     this.scroll.scrollHeight = document.documentElement.scrollHeight;
+            //     this.scroll.screenHeight = document.documentElement.clientHeight;
+            //     return this.scroll.scrollPosition + this.scroll.screenHeight >= this.scroll.scrollHeight;
+            //     // return  this.scroll.scrollHeight - (this.scroll.scrollPosition + this.scroll.screenHeight) <= this.scroll.screenHeight;
+            // }
+        },
+        // watch: {
+        //     bottom(bottom) {
+        //         if(bottom && this.audioTracks.data.length < this.audioTracks.count) {
+        //             this.nextPage();
+        //         }
+        //     }
+        // }
     }
 </script>
