@@ -44,9 +44,6 @@
                 if (!this.track.name) {
                     this.errors.push('Name is required');
                 }
-                if (!this.track.author) {
-                    this.errors.push('Author is required');
-                }
                 if (!this.track.audioTrack) {
                     this.errors.push('Audio file is required');
                 }
@@ -56,8 +53,10 @@
 
                 const newTrack =  new FormData;
                 newTrack.append('name', this.track.name);
-                newTrack.append('author', this.track.author);
                 newTrack.append('audio', this.track.audioTrack);
+                if (this.track.author) {
+                    newTrack.append('author', this.track.author);
+                }
                 if (this.track.imageTitle) {
                     newTrack.append('titleImage', this.track.imageTitle);
                 }

@@ -24,15 +24,15 @@ router.get('/getTrackById/:id', async (request, response) => {
 });
 
 router.get('/getTracks/:id&:offset&:limit', async (request, response) => {
-    const {limit, offset, id} = request.params;
-    console.log(request.params);
-    console.log(limit);
-    console.log(offset);
-    console.log(id);
+    let {limit, offset, id} = request.params;
+    offset = parseInt(offset, 10);
+    limit = parseInt(limit, 10);
     const postedBy = mongoose.Types.ObjectId(id);
-    const tracks =await Audio.find({postedBy})
-        .skip(offset)
-        .limit(limit);
+    const tracks =await Audio.find(
+            {postedBy},
+            [],
+            {skip: offset, limit}
+        ).sort({createdAt: -1});
     const res = {
         data: tracks,
         count: await Audio.count({postedBy}),
@@ -52,7 +52,11 @@ router.post('/addTrack', upload.fields([
             newTrack.titleImage = `/audio_tracks/titleImage/${request.files.titleImage[0].filename}`;
         }
         newTrack.audioPath = `/audio_tracks/audio/${request.files.audio[0].filename}`;
-        response.send(await Audio.create(newTrack));
+        const res = {
+            track: await Audio.create(newTrack),
+            count: await Audio.count({postedBy: request.user._id}),
+        };
+        response.send(res);
 });
 
 router.put('/editTrack', async(request, response) => {

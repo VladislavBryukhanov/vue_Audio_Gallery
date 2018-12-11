@@ -23,10 +23,18 @@ const mutations = {
     },
 
     getAudioTracks(state, tracks) {
-        state.audioTracks = [...state.audioTracks, ...tracks];
+        if(state.audioTracks) {
+            state.audioTracks = {
+                ...tracks,
+                data: [...state.audioTracks.data, ...tracks.data]
+            };
+        } else {
+            state.audioTracks = tracks;
+        }
     },
-    addAudioTrack(state, track) {
-        state.audioTracks.push(track);
+    addAudioTrack(state, payload) {
+        state.audioTracks.data.unshift(payload.track);
+        state.audioTracks.count = payload.count;
     }
 };
 
