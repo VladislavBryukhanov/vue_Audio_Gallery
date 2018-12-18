@@ -6,8 +6,9 @@ const app = express();
 const usersRouter = require('./routes/users');
 const audioRouter = require('./routes/audio');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/shop', {useNewUrlParser: true});
+const initRelations = require('./models/relations');
+initRelations(true);
+// const sequelize = require('./dbConnection');
 
 const unless = [
     '/auth/signIn',

@@ -1,37 +1,39 @@
-const mongoose = require('mongoose');
+const Sequelize = require('sequelize');
+const sequelize = require('../dbConnection');
+
 const ROLE = {
     USER: 'USER'
 }
 
-const userSchema = mongoose.Schema({
+const userModel = sequelize.define('user', {
     login: {
-        type: String,
-        required: true,
+        type: Sequelize.STRING,
+        allowNull: false,
         unique: true
     },
     password: {
-        type: String,
+        type: Sequelize.STRING,
         select: false,
-        required: true
+        allowNull: false
     },
     username: {
-        type: String,
-        required: true
+        type: Sequelize.STRING,
+        allowNull: false
     },
     sessionId: {
-        type: String,
+        type: Sequelize.STRING,
         select: false,
-        required: true
+        allowNull: false
     },
     bio: {
-        type: String,
-        default: ''
+        type: Sequelize.STRING,
+        defaultValue: ''
     },
     role: {
-        type: String,
-        required: true,
-        default: ROLE.USER
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ROLE.USER
     }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = userModel;
